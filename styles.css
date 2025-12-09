@@ -385,9 +385,6 @@ body {
 }
 
 .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
     color: var(--text-light);
     text-decoration: underline;
     font-size: 0.95rem;
@@ -400,10 +397,6 @@ body {
     opacity: 1;
     color: var(--accent-color);
     text-decoration: underline;
-}
-
-.social-link svg {
-    flex-shrink: 0;
 }
 
 /* Responsive Design */
@@ -569,14 +562,6 @@ body {
 
     .social-link {
         font-size: 0.8rem;
-        gap: 4px;
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-link svg {
-        width: 24px;
-        height: 24px;
     }
 }
 
