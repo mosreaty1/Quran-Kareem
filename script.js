@@ -1,6 +1,27 @@
 // Quran Kareem Web Application
 // Using Complete Surah Audio Files from EveryAyah.com
 
+// Security: Input Validation and Sanitization Functions
+function sanitizeInteger(value, min = 1, max = 114) {
+    const num = parseInt(value, 10);
+    if (isNaN(num) || num < min || num > max) {
+        return null;
+    }
+    return num;
+}
+
+function sanitizeText(text) {
+    if (typeof text !== 'string') return '';
+    // Remove any HTML tags and special characters that could be used for XSS
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function isValidReciter(reciter) {
+    return RECITER_MAPPINGS.hasOwnProperty(reciter);
+}
+
 // Global Variables
 let currentSurah = null;
 let audioPlayer = null;
@@ -107,11 +128,19 @@ async function loadSurahList() {
 
 // Load Surah Data
 async function loadSurah(surahNumber) {
+    // Security: Validate surah number
+    const validSurahNumber = sanitizeInteger(surahNumber, 1, 114);
+    if (!validSurahNumber) {
+        console.error('Invalid surah number:', surahNumber);
+        alert('رقم السورة غير صحيح');
+        return;
+    }
+
     showLoading();
 
     try {
         // Load Surah metadata
-        const response = await fetch(`${API_BASE}/surah/${surahNumber}`);
+        const response = await fetch(`${API_BASE}/surah/${validSurahNumber}`);
         const data = await response.json();
 
         if (data.code === 200 && data.data) {
@@ -134,9 +163,16 @@ async function loadSurah(surahNumber) {
 
 // Load Complete Surah Audio by combining all ayahs
 async function loadFullSurahAudio(surahNumber) {
+    // Security: Validate surah number
+    const validSurahNumber = sanitizeInteger(surahNumber, 1, 114);
+    if (!validSurahNumber) {
+        console.error('Invalid surah number:', surahNumber);
+        return;
+    }
+
     try {
         // Get ayah data to know how many ayahs
-        const response = await fetch(`${API_BASE}/surah/${surahNumber}`);
+        const response = await fetch(`${API_BASE}/surah/${validSurahNumber}`);
         const data = await response.json();
 
         if (data.code === 200 && data.data) {
@@ -169,28 +205,48 @@ async function loadFullSurahAudio(surahNumber) {
 
 // Load and play specific ayah
 function loadAndPlayAyah(index) {
-    if (window.currentAyahFiles && index < window.currentAyahFiles.length) {
-        window.currentAyahFileIndex = index;
-        const ayahUrl = window.currentAyahFiles[index];
-
-        console.log('Loading ayah:', index + 1, 'of', window.currentAyahFiles.length);
-        console.log('URL:', ayahUrl);
-
-        audioPlayer.src = ayahUrl;
-        audioPlayer.load();
-
-        const progress = ((index + 1) / window.currentAyahFiles.length * 100).toFixed(1);
-        currentAyahNumber.textContent = `الآية ${index + 1} من ${window.currentAyahFiles.length}`;
+    // Security: Validate index
+    const validIndex = sanitizeInteger(index, 0, 286);
+    if (validIndex === null || !window.currentAyahFiles || validIndex >= window.currentAyahFiles.length) {
+        console.error('Invalid ayah index:', index);
+        return;
     }
+
+    window.currentAyahFileIndex = validIndex;
+    const ayahUrl = window.currentAyahFiles[validIndex];
+
+    // Security: Validate URL format
+    if (!ayahUrl || typeof ayahUrl !== 'string' || !ayahUrl.startsWith('https://')) {
+        console.error('Invalid audio URL:', ayahUrl);
+        return;
+    }
+
+    console.log('Loading ayah:', validIndex + 1, 'of', window.currentAyahFiles.length);
+    console.log('URL:', ayahUrl);
+
+    audioPlayer.src = ayahUrl;
+    audioPlayer.load();
+
+    const progress = ((validIndex + 1) / window.currentAyahFiles.length * 100).toFixed(1);
+    currentAyahNumber.textContent = `الآية ${validIndex + 1} من ${window.currentAyahFiles.length}`;
 }
 
 // Display Surah Information
 function displaySurahInfo() {
     const surah = currentSurah;
-    const revelationType = surah.revelationType === 'Meccan' ? 'مكية' : 'مدنية';
 
-    surahName.textContent = surah.name;
-    surahDetails.textContent = `${surah.englishName} - ${surah.englishNameTranslation} | ${revelationType} | ${surah.numberOfAyahs} آية`;
+    // Security: Validate API response data
+    if (!surah || !surah.name || !surah.englishName) {
+        console.error('Invalid surah data');
+        return;
+    }
+
+    const revelationType = surah.revelationType === 'Meccan' ? 'مكية' : 'مدنية';
+    const numberOfAyahs = sanitizeInteger(surah.numberOfAyahs, 1, 286) || 0;
+
+    // Use textContent instead of innerHTML to prevent XSS
+    surahName.textContent = sanitizeText(surah.name);
+    surahDetails.textContent = `${sanitizeText(surah.englishName)} - ${sanitizeText(surah.englishNameTranslation)} | ${revelationType} | ${numberOfAyahs} آية`;
 }
 
 // Play/Pause Toggle
@@ -273,7 +329,14 @@ function setupEventListeners() {
 
     // Reciter Selection
     reciterSelect.addEventListener('change', (e) => {
-        currentReciter = e.target.value;
+        const newReciter = e.target.value;
+        // Security: Validate reciter
+        if (!isValidReciter(newReciter)) {
+            console.error('Invalid reciter:', newReciter);
+            alert('القارئ غير صحيح');
+            return;
+        }
+        currentReciter = newReciter;
         if (currentSurah) {
             // Stop current playback
             audioPlayer.pause();

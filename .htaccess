@@ -1,0 +1,65 @@
+# Security Headers for Quran Kareem Website
+# These headers protect against common web vulnerabilities
+
+<IfModule mod_headers.c>
+    # Prevent clickjacking attacks
+    Header always set X-Frame-Options "DENY"
+
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Enable XSS protection in browsers
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Strict referrer policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' https://everyayah.com https://download.quranicaudio.com; connect-src 'self' https://api.alquran.cloud https://everyayah.com https://download.quranicaudio.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
+    # Disable unnecessary features
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # Enable HSTS (HTTP Strict Transport Security) for HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect .htaccess file itself
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Disable server signature
+ServerSignature Off
+
+# Enable GZIP compression for better performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType text/html .html
+    AddType text/css .css
+    AddType application/javascript .js
+    AddType audio/mpeg .mp3
+</IfModule>
+
+# Enable browser caching for static resources
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType audio/mpeg "access plus 1 year"
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
