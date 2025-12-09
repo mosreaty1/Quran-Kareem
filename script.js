@@ -1,13 +1,11 @@
 // Quran Kareem Web Application
-// Using Al-Quran Cloud API: https://alquran.cloud/api
+// Using Complete Surah Audio Files from QuranicAudio.com
 
 // Global Variables
 let currentSurah = null;
-let currentAyahIndex = 0;
-let ayahsData = [];
 let audioPlayer = null;
 let isPlaying = false;
-let currentReciter = 'ar.alafasy';
+let currentReciter = 'mishary_rashid_alafasy';
 let totalAyahs = 0;
 
 // DOM Elements
@@ -32,6 +30,20 @@ audioPlayer = document.getElementById('audio-player');
 
 // API Base URLs
 const API_BASE = 'https://api.alquran.cloud/v1';
+const AUDIO_BASE = 'https://download.quranicaudio.com/quran';
+
+// Reciter mappings to audio folder names
+const RECITER_MAPPINGS = {
+    'mishary_rashid_alafasy': 'mishary_rashid_alafasy',
+    'abdul_basit_murattal': 'abdulbaset_mujawwad',
+    'abdullah_basfar': 'abdullah_basfar_192kbps',
+    'abdurrahman_sudais': 'abdurrahmaan_as-sudays_192kbps',
+    'abu_bakr_shatri': 'abu_bakr_ash-shaatree_128kbps',
+    'mahmoud_khalil_al_hussary': 'mahmoud_khalil_al-hussary_128kbps',
+    'mohamed_siddiq_alminshawi': 'muhammad_siddeeq_al-minshaawee_128kbps',
+    'muhammad_ayyoub': 'muhammad_ayyoob_128kbps',
+    'ali_hajjaj_alsouasi': 'ali_hajjaj_alsouasi_128kbps'
+};
 
 // Initialize Application
 async function init() {
@@ -72,23 +84,16 @@ async function loadSurah(surahNumber) {
     showLoading();
 
     try {
-        // Load Surah text and audio data
-        const [textResponse, audioResponse] = await Promise.all([
-            fetch(`${API_BASE}/surah/${surahNumber}`),
-            fetch(`${API_BASE}/surah/${surahNumber}/${currentReciter}`)
-        ]);
+        // Load Surah metadata
+        const response = await fetch(`${API_BASE}/surah/${surahNumber}`);
+        const data = await response.json();
 
-        const textData = await textResponse.json();
-        const audioData = await audioResponse.json();
-
-        if (textData.code === 200 && audioData.code === 200) {
-            currentSurah = textData.data;
-            ayahsData = audioData.data.ayahs;
-            totalAyahs = ayahsData.length;
-            currentAyahIndex = 0;
+        if (data.code === 200 && data.data) {
+            currentSurah = data.data;
+            totalAyahs = currentSurah.numberOfAyahs;
 
             displaySurahInfo();
-            setupAudioPlayer();
+            loadFullSurahAudio(surahNumber);
 
             surahInfo.style.display = 'block';
             audioPlayerContainer.style.display = 'block';
@@ -101,6 +106,25 @@ async function loadSurah(surahNumber) {
     }
 }
 
+// Load Complete Surah Audio File
+function loadFullSurahAudio(surahNumber) {
+    // Format surah number with leading zeros (001, 002, etc.)
+    const formattedSurahNumber = String(surahNumber).padStart(3, '0');
+
+    // Construct full surah audio URL
+    const reciterFolder = RECITER_MAPPINGS[currentReciter];
+    const audioUrl = `${AUDIO_BASE}/${reciterFolder}/${formattedSurahNumber}.mp3`;
+
+    console.log('Loading full surah audio:', audioUrl);
+
+    // Load the complete surah audio
+    audioPlayer.src = audioUrl;
+    audioPlayer.load();
+
+    // Update status
+    currentAyahNumber.textContent = 'جاهز للتشغيل - السورة كاملة';
+}
+
 // Display Surah Information
 function displaySurahInfo() {
     const surah = currentSurah;
@@ -110,33 +134,18 @@ function displaySurahInfo() {
     surahDetails.textContent = `${surah.englishName} - ${surah.englishNameTranslation} | ${revelationType} | ${surah.numberOfAyahs} آية`;
 }
 
-// Setup Audio Player for Continuous Playback
-function setupAudioPlayer() {
-    if (ayahsData.length > 0) {
-        currentAyahIndex = 0;
-        loadAyahAudio(0);
-        updateCurrentAyahDisplay();
-    }
-}
-
-// Load Ayah Audio
-function loadAyahAudio(index) {
-    if (index >= 0 && index < ayahsData.length) {
-        currentAyahIndex = index;
-        const ayah = ayahsData[index];
-
-        audioPlayer.src = ayah.audio;
-        audioPlayer.load();
-
-        updateCurrentAyahDisplay();
-    }
-}
-
 // Play/Pause Toggle
 function togglePlayPause() {
     if (audioPlayer.paused) {
-        audioPlayer.play();
-        updatePlayPauseButton(true);
+        const playPromise = audioPlayer.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                updatePlayPauseButton(true);
+            }).catch(error => {
+                console.error('Playback error:', error);
+                alert('حدث خطأ في تشغيل الصوت. يرجى المحاولة مرة أخرى.');
+            });
+        }
     } else {
         audioPlayer.pause();
         updatePlayPauseButton(false);
@@ -149,21 +158,21 @@ function updatePlayPauseButton(playing) {
     if (playing) {
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
+        currentAyahNumber.textContent = 'جاري التشغيل - السورة كاملة';
     } else {
         playIcon.style.display = 'block';
         pauseIcon.style.display = 'none';
+        if (audioPlayer.ended) {
+            currentAyahNumber.textContent = 'اكتملت السورة';
+        } else {
+            currentAyahNumber.textContent = 'متوقف مؤقتاً';
+        }
     }
-}
-
-// Update Current Ayah Display
-function updateCurrentAyahDisplay() {
-    const ayahNumber = currentAyahIndex + 1;
-    currentAyahNumber.textContent = `الآية ${ayahNumber} من ${totalAyahs}`;
 }
 
 // Format Time
 function formatTime(seconds) {
-    if (isNaN(seconds)) return '0:00';
+    if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
 
     const hours = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
@@ -184,6 +193,12 @@ function updateProgress() {
         progressBar.value = progress;
         currentTimeSpan.textContent = formatTime(currentTime);
         durationSpan.textContent = formatTime(duration);
+
+        // Update status during playback
+        if (!audioPlayer.paused) {
+            const percentComplete = Math.floor(progress);
+            currentAyahNumber.textContent = `جاري التشغيل - ${percentComplete}%`;
+        }
     }
 }
 
@@ -231,6 +246,7 @@ function setupEventListeners() {
 
     audioPlayer.addEventListener('loadedmetadata', () => {
         durationSpan.textContent = formatTime(audioPlayer.duration);
+        console.log('Audio loaded. Duration:', formatTime(audioPlayer.duration));
     });
 
     audioPlayer.addEventListener('play', () => {
@@ -241,46 +257,43 @@ function setupEventListeners() {
         updatePlayPauseButton(false);
     });
 
-    // Continuous Playback - Auto-play next ayah
     audioPlayer.addEventListener('ended', () => {
-        if (currentAyahIndex < ayahsData.length - 1) {
-            // Load and play next ayah automatically
-            loadAyahAudio(currentAyahIndex + 1);
-            audioPlayer.play();
-        } else {
-            // Surah completed
-            updatePlayPauseButton(false);
+        updatePlayPauseButton(false);
+        progressBar.value = 100;
+        currentAyahNumber.textContent = 'اكتملت السورة بحمد الله';
+
+        // Reset after 3 seconds
+        setTimeout(() => {
             progressBar.value = 0;
             currentTimeSpan.textContent = '0:00';
-            currentAyahNumber.textContent = 'اكتملت السورة';
-
-            // Reset to first ayah
-            setTimeout(() => {
-                currentAyahIndex = 0;
-                loadAyahAudio(0);
-            }, 2000);
-        }
+            currentAyahNumber.textContent = 'جاهز للتشغيل - السورة كاملة';
+        }, 3000);
     });
 
     audioPlayer.addEventListener('error', (e) => {
         console.error('Audio error:', e);
+        console.error('Error code:', audioPlayer.error?.code);
+        console.error('Error message:', audioPlayer.error?.message);
+        console.error('Source:', audioPlayer.src);
 
-        // Try to continue with next ayah if available
-        if (currentAyahIndex < ayahsData.length - 1) {
-            console.log('Trying next ayah...');
-            loadAyahAudio(currentAyahIndex + 1);
-            if (isPlaying) {
-                audioPlayer.play();
-            }
-        } else {
-            alert('حدث خطأ في تحميل الصوت. يرجى المحاولة مرة أخرى.');
-            updatePlayPauseButton(false);
+        updatePlayPauseButton(false);
+        currentAyahNumber.textContent = 'حدث خطأ في التحميل';
+        alert('حدث خطأ في تحميل الصوت. يرجى اختيار قارئ آخر أو المحاولة مرة أخرى.');
+    });
+
+    audioPlayer.addEventListener('waiting', () => {
+        currentAyahNumber.textContent = 'جاري التحميل...';
+    });
+
+    audioPlayer.addEventListener('canplay', () => {
+        if (isPlaying) {
+            currentAyahNumber.textContent = 'جاري التشغيل - السورة كاملة';
         }
     });
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
-        if (ayahsData.length === 0) return;
+        if (!currentSurah) return;
 
         // Space or K to play/pause
         if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'k' || e.key === 'K') {

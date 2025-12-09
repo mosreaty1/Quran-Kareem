@@ -1,18 +1,18 @@
 # القرآن الكريم - Quran Kareem Website
 
-A professional, modern Quran website where users can listen to the complete Holy Quran with continuous audio playback from multiple renowned reciters.
+A professional, modern Quran website where users can listen to complete Surahs as single, uninterrupted audio files from multiple renowned reciters.
 
 ## ✨ Features
 
-- 🎧 **Continuous Audio Playback** - Listen to complete Surahs without interruption
-- 📖 **All 114 Surahs** - Complete Quran with 9 renowned Qurra (reciters)
+- 🎧 **Complete Surah Audio** - Each Surah plays as ONE complete audio file with NO breaks
+- 📖 **All 114 Surahs** - Full Quran with 9 renowned Qurra (reciters)
 - 🎵 **Professional Audio Player** - Elegant player with play/pause and progress controls
-- 📊 **Real-time Progress** - Track current ayah progress during playback
+- 📊 **Real-time Progress** - Track playback progress with percentage indicator
 - 🎨 **Modern Professional Design** - Clean, minimalist UI with sophisticated styling
 - 📱 **Fully Responsive** - Perfect experience on desktop, tablet, and mobile devices
 - ⌨️ **Keyboard Shortcuts** - Space bar to play/pause
 - 🌙 **Premium Aesthetics** - Smooth animations and professional color scheme
-- 🔄 **Seamless Auto-Play** - Automatically transitions between ayahs for uninterrupted listening
+- 🔊 **High-Quality Audio** - Crystal clear audio from QuranicAudio.com
 - ⚡ **Fast & Lightweight** - No dependencies, pure HTML/CSS/JavaScript
 
 ## 🎤 Available Reciters
@@ -25,7 +25,7 @@ A professional, modern Quran website where users can listen to the complete Holy
 6. **محمود خليل الحصري** - Mahmoud Khalil Al-Hussary
 7. **محمد صديق المنشاوي** - Mohamed Siddiq Al-Minshawi
 8. **محمد أيوب** - Muhammad Ayyoub
-9. **علي الحذيفي** - Ali Al-Hudhaify
+9. **علي حجاج السويسي** - Ali Hajjaj Alsouasi
 
 ## 🚀 Live Demo
 
@@ -95,14 +95,19 @@ Simply open `index.html` in any modern web browser to use the website.
 
 ## 📡 API Information
 
-This project uses the free [Al-Quran Cloud API](https://alquran.cloud/api):
+This project uses multiple free APIs:
 
+**Al-Quran Cloud API** for Surah metadata:
 - **API Base URL:** `https://api.alquran.cloud/v1`
 - **No API Key Required** - Completely free to use
 - **Endpoints Used:**
   - `/surah` - Get list of all Surahs
-  - `/surah/{number}` - Get Surah text
-  - `/surah/{number}/{edition}` - Get Surah with audio
+  - `/surah/{number}` - Get Surah metadata
+
+**QuranicAudio.com** for complete Surah audio files:
+- **Audio Base URL:** `https://download.quranicaudio.com/quran`
+- **High-Quality Audio** - Complete Surah MP3 files (128-192 kbps)
+- **No API Key Required** - Direct MP3 downloads
 
 ## ⌨️ Keyboard Shortcuts
 
@@ -130,11 +135,12 @@ Quran-Kareem/
 
 ## 🎯 Features in Detail
 
-### Continuous Audio Playback
-- Plays complete Surah from beginning to end without interruption
-- Automatically transitions between ayahs seamlessly
-- Real-time progress tracking showing current ayah
-- No manual intervention needed for uninterrupted listening
+### Complete Surah Audio Files
+- Each Surah is played as ONE single audio file
+- No breaks, cuts, or transitions between ayahs
+- Completely uninterrupted listening experience
+- High-quality audio (128-192 kbps MP3)
+- Real-time progress tracking with percentage indicator
 
 ### Professional Audio Player
 - Large, elegant play/pause button
