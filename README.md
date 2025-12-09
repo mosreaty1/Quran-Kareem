@@ -185,9 +185,16 @@ This project is open source and available under the [MIT License](LICENSE).
 - **Google Fonts** for the beautiful Arabic fonts
 - All the Qurra (reciters) for their beautiful recitations
 
-## 📧 Contact
+## 👨‍💻 Developer
 
-For questions or suggestions, please open an issue on GitHub.
+**Developed by Mohamed Alsariti**
+
+### 📧 Contact & Social Links
+
+- 🌐 **Website:** [Sariti.tech](https://sariti.tech)
+- 📘 **Facebook:** [Mohamed Alsariti](https://www.facebook.com/mohamed.el.seraty.2025)
+- 💬 **WhatsApp:** [+201558282586](https://wa.me/201558282586)
+- 🐛 **Issues:** Open an issue on GitHub for bug reports and feature requests
 
 ---
 
