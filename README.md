@@ -1,19 +1,19 @@
 # القرآن الكريم - Quran Kareem Website
 
-A beautiful, fully-functional Quran website where users can read and listen to the Holy Quran in Arabic with multiple reciters.
+A professional, modern Quran website where users can listen to the complete Holy Quran with continuous audio playback from multiple renowned reciters.
 
 ## ✨ Features
 
-- 📖 **Complete Quran Text** - All 114 Surahs in Arabic
-- 🎧 **Audio Recitation** - Listen to beautiful recitations from 9 renowned Qurra (reciters)
-- 🎵 **Audio Player** - Full-featured audio player with play/pause, previous/next controls
-- 🎯 **Ayah Navigation** - Click any ayah to play it directly
-- 🎨 **Beautiful Arabic Typography** - Using Amiri and Cairo fonts for authentic Arabic text
-- 📱 **Fully Responsive** - Works perfectly on desktop, tablet, and mobile devices
-- ⌨️ **Keyboard Shortcuts** - Space to play/pause, Arrow keys for navigation
-- 🌙 **Elegant Design** - Modern UI with smooth animations and transitions
-- 🔄 **Auto-Play** - Automatically plays next ayah after current one finishes
-- 🎯 **Visual Feedback** - Current playing ayah is highlighted with smooth scrolling
+- 🎧 **Continuous Audio Playback** - Listen to complete Surahs without interruption
+- 📖 **All 114 Surahs** - Complete Quran with 9 renowned Qurra (reciters)
+- 🎵 **Professional Audio Player** - Elegant player with play/pause and progress controls
+- 📊 **Real-time Progress** - Track current ayah progress during playback
+- 🎨 **Modern Professional Design** - Clean, minimalist UI with sophisticated styling
+- 📱 **Fully Responsive** - Perfect experience on desktop, tablet, and mobile devices
+- ⌨️ **Keyboard Shortcuts** - Space bar to play/pause
+- 🌙 **Premium Aesthetics** - Smooth animations and professional color scheme
+- 🔄 **Seamless Auto-Play** - Automatically transitions between ayahs for uninterrupted listening
+- ⚡ **Fast & Lightweight** - No dependencies, pure HTML/CSS/JavaScript
 
 ## 🎤 Available Reciters
 
@@ -107,8 +107,7 @@ This project uses the free [Al-Quran Cloud API](https://alquran.cloud/api):
 ## ⌨️ Keyboard Shortcuts
 
 - **Space** - Play/Pause audio
-- **Right Arrow** - Previous ayah
-- **Left Arrow** - Next ayah
+- **K** - Play/Pause audio (alternative)
 
 ## 📱 Browser Support
 
@@ -131,29 +130,37 @@ Quran-Kareem/
 
 ## 🎯 Features in Detail
 
-### Audio Player
-- Play/Pause button with icon toggle
-- Previous/Next ayah navigation
-- Progress bar with seek functionality
-- Current time and duration display
-- Auto-play next ayah
+### Continuous Audio Playback
+- Plays complete Surah from beginning to end without interruption
+- Automatically transitions between ayahs seamlessly
+- Real-time progress tracking showing current ayah
+- No manual intervention needed for uninterrupted listening
+
+### Professional Audio Player
+- Large, elegant play/pause button
+- Smooth progress bar with seek functionality
+- Time display showing current time and total duration
+- Visual indicator of current ayah being recited
+- Completion notification when Surah finishes
 
 ### Surah Browser
-- Dropdown to select from 114 Surahs
+- Dropdown to select from all 114 Surahs
 - Shows Surah name in Arabic and English
 - Displays number of ayahs and revelation type (Meccan/Medinan)
-
-### Ayah Display
-- Beautiful Arabic typography
-- Each ayah is clickable to play
-- Current playing ayah is highlighted
-- Smooth auto-scroll to current ayah
-- Ayah numbers displayed clearly
+- Instant loading and playback
 
 ### Reciter Selection
 - Choose from 9 famous Quran reciters
 - Seamless switching between reciters
 - High-quality audio for each reciter
+- Maintains playback position when switching
+
+### Modern Professional Design
+- Clean, minimalist interface
+- Professional color scheme (green tones)
+- Smooth animations and transitions
+- Focus on listening experience
+- Distraction-free design
 
 ## 🤝 Contributing
 

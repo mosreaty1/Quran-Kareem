@@ -8,6 +8,7 @@ let ayahsData = [];
 let audioPlayer = null;
 let isPlaying = false;
 let currentReciter = 'ar.alafasy';
+let totalAyahs = 0;
 
 // DOM Elements
 const loading = document.getElementById('loading');
@@ -17,11 +18,8 @@ const reciterSelect = document.getElementById('reciter-select');
 const surahInfo = document.getElementById('surah-info');
 const surahName = document.getElementById('surah-name');
 const surahDetails = document.getElementById('surah-details');
-const ayahsContainer = document.getElementById('ayahs-container');
 const audioPlayerContainer = document.getElementById('audio-player-container');
 const playPauseBtn = document.getElementById('play-pause');
-const prevAyahBtn = document.getElementById('prev-ayah');
-const nextAyahBtn = document.getElementById('next-ayah');
 const progressBar = document.getElementById('progress-bar');
 const currentTimeSpan = document.getElementById('current-time');
 const durationSpan = document.getElementById('duration');
@@ -74,7 +72,7 @@ async function loadSurah(surahNumber) {
     showLoading();
 
     try {
-        // Load Surah text and audio
+        // Load Surah text and audio data
         const [textResponse, audioResponse] = await Promise.all([
             fetch(`${API_BASE}/surah/${surahNumber}`),
             fetch(`${API_BASE}/surah/${surahNumber}/${currentReciter}`)
@@ -86,10 +84,10 @@ async function loadSurah(surahNumber) {
         if (textData.code === 200 && audioData.code === 200) {
             currentSurah = textData.data;
             ayahsData = audioData.data.ayahs;
+            totalAyahs = ayahsData.length;
             currentAyahIndex = 0;
 
             displaySurahInfo();
-            displayAyahs();
             setupAudioPlayer();
 
             surahInfo.style.display = 'block';
@@ -112,36 +110,12 @@ function displaySurahInfo() {
     surahDetails.textContent = `${surah.englishName} - ${surah.englishNameTranslation} | ${revelationType} | ${surah.numberOfAyahs} آية`;
 }
 
-// Display Ayahs
-function displayAyahs() {
-    ayahsContainer.innerHTML = '';
-
-    ayahsData.forEach((ayah, index) => {
-        const ayahDiv = document.createElement('div');
-        ayahDiv.className = 'ayah';
-        ayahDiv.dataset.index = index;
-
-        // Special case for Al-Fatiha and At-Tawbah (no Bismillah)
-        let ayahText = ayah.text;
-
-        ayahDiv.innerHTML = `
-            <span class="ayah-number">${ayah.numberInSurah}</span>
-            <span class="ayah-text">${ayahText}</span>
-        `;
-
-        // Click to play specific ayah
-        ayahDiv.addEventListener('click', () => {
-            playAyah(index);
-        });
-
-        ayahsContainer.appendChild(ayahDiv);
-    });
-}
-
-// Setup Audio Player
+// Setup Audio Player for Continuous Playback
 function setupAudioPlayer() {
     if (ayahsData.length > 0) {
+        currentAyahIndex = 0;
         loadAyahAudio(0);
+        updateCurrentAyahDisplay();
     }
 }
 
@@ -155,15 +129,7 @@ function loadAyahAudio(index) {
         audioPlayer.load();
 
         updateCurrentAyahDisplay();
-        highlightCurrentAyah();
     }
-}
-
-// Play Ayah
-function playAyah(index) {
-    loadAyahAudio(index);
-    audioPlayer.play();
-    updatePlayPauseButton(true);
 }
 
 // Play/Pause Toggle
@@ -189,52 +155,23 @@ function updatePlayPauseButton(playing) {
     }
 }
 
-// Previous Ayah
-function previousAyah() {
-    if (currentAyahIndex > 0) {
-        playAyah(currentAyahIndex - 1);
-    }
-}
-
-// Next Ayah
-function nextAyah() {
-    if (currentAyahIndex < ayahsData.length - 1) {
-        playAyah(currentAyahIndex + 1);
-    }
-}
-
 // Update Current Ayah Display
 function updateCurrentAyahDisplay() {
-    const ayahNumber = ayahsData[currentAyahIndex].numberInSurah;
-    currentAyahNumber.textContent = `الآية: ${ayahNumber}`;
-}
-
-// Highlight Current Ayah
-function highlightCurrentAyah() {
-    // Remove previous highlight
-    document.querySelectorAll('.ayah').forEach(ayah => {
-        ayah.classList.remove('playing');
-    });
-
-    // Add highlight to current ayah
-    const currentAyahElement = document.querySelector(`.ayah[data-index="${currentAyahIndex}"]`);
-    if (currentAyahElement) {
-        currentAyahElement.classList.add('playing');
-
-        // Smooth scroll to current ayah
-        currentAyahElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        });
-    }
+    const ayahNumber = currentAyahIndex + 1;
+    currentAyahNumber.textContent = `الآية ${ayahNumber} من ${totalAyahs}`;
 }
 
 // Format Time
 function formatTime(seconds) {
     if (isNaN(seconds)) return '0:00';
 
-    const mins = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
     const secs = Math.floor(seconds % 60);
+
+    if (hours > 0) {
+        return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
@@ -265,6 +202,9 @@ function setupEventListeners() {
     surahSelect.addEventListener('change', (e) => {
         const surahNumber = e.target.value;
         if (surahNumber) {
+            // Stop current playback
+            audioPlayer.pause();
+            updatePlayPauseButton(false);
             loadSurah(surahNumber);
         }
     });
@@ -273,14 +213,15 @@ function setupEventListeners() {
     reciterSelect.addEventListener('change', (e) => {
         currentReciter = e.target.value;
         if (currentSurah) {
+            // Stop current playback
+            audioPlayer.pause();
+            updatePlayPauseButton(false);
             loadSurah(currentSurah.number);
         }
     });
 
     // Audio Player Controls
     playPauseBtn.addEventListener('click', togglePlayPause);
-    prevAyahBtn.addEventListener('click', previousAyah);
-    nextAyahBtn.addEventListener('click', nextAyah);
 
     // Progress Bar
     progressBar.addEventListener('input', seekAudio);
@@ -300,41 +241,51 @@ function setupEventListeners() {
         updatePlayPauseButton(false);
     });
 
+    // Continuous Playback - Auto-play next ayah
     audioPlayer.addEventListener('ended', () => {
-        // Auto-play next ayah
         if (currentAyahIndex < ayahsData.length - 1) {
-            nextAyah();
+            // Load and play next ayah automatically
+            loadAyahAudio(currentAyahIndex + 1);
+            audioPlayer.play();
         } else {
+            // Surah completed
             updatePlayPauseButton(false);
             progressBar.value = 0;
             currentTimeSpan.textContent = '0:00';
+            currentAyahNumber.textContent = 'اكتملت السورة';
+
+            // Reset to first ayah
+            setTimeout(() => {
+                currentAyahIndex = 0;
+                loadAyahAudio(0);
+            }, 2000);
         }
     });
 
     audioPlayer.addEventListener('error', (e) => {
         console.error('Audio error:', e);
-        alert('حدث خطأ في تحميل الصوت. يرجى المحاولة مرة أخرى.');
-        updatePlayPauseButton(false);
+
+        // Try to continue with next ayah if available
+        if (currentAyahIndex < ayahsData.length - 1) {
+            console.log('Trying next ayah...');
+            loadAyahAudio(currentAyahIndex + 1);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        } else {
+            alert('حدث خطأ في تحميل الصوت. يرجى المحاولة مرة أخرى.');
+            updatePlayPauseButton(false);
+        }
     });
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
         if (ayahsData.length === 0) return;
 
-        switch(e.key) {
-            case ' ':
-            case 'Spacebar':
-                e.preventDefault();
-                togglePlayPause();
-                break;
-            case 'ArrowRight':
-                e.preventDefault();
-                previousAyah();
-                break;
-            case 'ArrowLeft':
-                e.preventDefault();
-                nextAyah();
-                break;
+        // Space or K to play/pause
+        if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'k' || e.key === 'K') {
+            e.preventDefault();
+            togglePlayPause();
         }
     });
 }

@@ -15,7 +15,7 @@
         <header class="header">
             <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
             <h1 class="main-title">القرآن الكريم</h1>
-            <p class="subtitle">اقرأ واستمع إلى القرآن الكريم</p>
+            <p class="subtitle">استمع إلى القرآن الكريم</p>
         </header>
 
         <!-- Loading Spinner -->
@@ -58,38 +58,36 @@
 
             <!-- Audio Player -->
             <div id="audio-player-container" class="audio-player-container" style="display: none;">
-                <div class="audio-controls">
-                    <button id="prev-ayah" class="control-btn" title="الآية السابقة">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M11 17l5-5-5-5M18 17l-5-5 5-5"/>
-                        </svg>
-                    </button>
-                    <button id="play-pause" class="control-btn play-pause-btn" title="تشغيل/إيقاف">
-                        <svg id="play-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg id="pause-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button id="next-ayah" class="control-btn" title="الآية التالية">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 17l-5-5 5-5M6 17l5-5-5-5"/>
-                        </svg>
-                    </button>
+                <div class="player-wrapper">
+                    <div class="audio-controls">
+                        <button id="play-pause" class="control-btn play-pause-btn" title="تشغيل/إيقاف">
+                            <svg id="play-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <svg id="pause-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-container">
+                            <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0">
+                        </div>
+                        <div class="time-info">
+                            <span id="current-time" class="time">0:00</span>
+                            <span id="duration" class="time">0:00</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="progress-container">
-                    <span id="current-time" class="time">0:00</span>
-                    <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0">
-                    <span id="duration" class="time">0:00</span>
-                </div>
-                <div class="current-ayah-info">
-                    <span id="current-ayah-number">الآية: 1</span>
+                <div class="playback-info">
+                    <div class="current-ayah-info">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span id="current-ayah-number">جاهز للتشغيل</span>
+                    </div>
                 </div>
             </div>
-
-            <!-- Ayahs Display -->
-            <div id="ayahs-container" class="ayahs-container"></div>
         </div>
 
         <!-- Footer -->
