@@ -5,75 +5,123 @@
 const videos = [
     {
         id: 1,
-        title: 'أذكار الصباح والمساء',
-        description: 'تعلم الأذكار اليومية التي تحفظك بإذن الله',
-        category: 'dua',
-        youtubeId: 'hbPs67zaOCk',
-        thumbnail: 'https://i.ytimg.com/vi/hbPs67zaOCk/mqdefault.jpg'
+        title: 'سورة البقرة كاملة - مشاري العفاسي',
+        description: 'تلاوة خاشعة لسورة البقرة كاملة بصوت الشيخ مشاري راشد العفاسي',
+        category: 'quran',
+        youtubeId: 'Z48lebSTboE',
+        thumbnail: 'https://i.ytimg.com/vi/Z48lebSTboE/mqdefault.jpg'
     },
     {
         id: 2,
-        title: 'تلاوة خاشعة من سورة البقرة',
-        description: 'تلاوة مؤثرة من سورة البقرة بصوت جميل',
+        title: 'سورة الكهف كاملة - عبد الرحمن السديس',
+        description: 'تلاوة مؤثرة لسورة الكهف من الحرم المكي',
         category: 'quran',
-        youtubeId: 'THWPkZ5Yq38',
-        thumbnail: 'https://i.ytimg.com/vi/THWPkZ5Yq38/mqdefault.jpg'
+        youtubeId: 'IZiJLw7eT4Y',
+        thumbnail: 'https://i.ytimg.com/vi/IZiJLw7eT4Y/mqdefault.jpg'
     },
     {
         id: 3,
-        title: 'أحاديث نبوية شريفة',
-        description: 'شرح لبعض الأحاديث النبوية المهمة',
-        category: 'hadith',
-        youtubeId: '8wphBPJWb0c',
-        thumbnail: 'https://i.ytimg.com/vi/8wphBPJWb0c/mqdefault.jpg'
+        title: 'سورة الرحمن - ماهر المعيقلي',
+        description: 'تلاوة جميلة لسورة الرحمن بصوت الشيخ ماهر المعيقلي',
+        category: 'quran',
+        youtubeId: 'MbPiNcv95r8',
+        thumbnail: 'https://i.ytimg.com/vi/MbPiNcv95r8/mqdefault.jpg'
     },
     {
         id: 4,
-        title: 'كيفية الوضوء الصحيح',
-        description: 'تعليم الوضوء بالطريقة الصحيحة',
-        category: 'fiqh',
-        youtubeId: 'exQEjdPHdZY',
-        thumbnail: 'https://i.ytimg.com/vi/exQEjdPHdZY/mqdefault.jpg'
+        title: 'سورة يس كاملة - عبد الباسط',
+        description: 'تلاوة مؤثرة لسورة يس بصوت الشيخ عبد الباسط عبد الصمد',
+        category: 'quran',
+        youtubeId: 'jIJ0d5grv9I',
+        thumbnail: 'https://i.ytimg.com/vi/jIJ0d5grv9I/mqdefault.jpg'
     },
     {
         id: 5,
-        title: 'السيرة النبوية - ولادة النبي ﷺ',
-        description: 'قصة ولادة النبي محمد صلى الله عليه وسلم',
-        category: 'seerah',
-        youtubeId: 'WuwGfAq3O3g',
-        thumbnail: 'https://i.ytimg.com/vi/WuwGfAq3O3g/mqdefault.jpg'
+        title: 'أذكار الصباح والمساء كاملة',
+        description: 'أذكار الصباح والمساء مع الدعاء والتسبيح',
+        category: 'dua',
+        youtubeId: 'yv-L8d5GHWI',
+        thumbnail: 'https://i.ytimg.com/vi/yv-L8d5GHWI/mqdefault.jpg'
     },
     {
         id: 6,
-        title: 'تلاوة سورة يس كاملة',
-        description: 'تلاوة هادئة ومؤثرة لسورة يس',
-        category: 'quran',
-        youtubeId: 'S_TtkxTBq-U',
-        thumbnail: 'https://i.ytimg.com/vi/S_TtkxTBq-U/mqdefault.jpg'
+        title: 'رقية شرعية كاملة',
+        description: 'الرقية الشرعية الشاملة من القرآن والسنة',
+        category: 'dua',
+        youtubeId: 'LD1FoB5gudI',
+        thumbnail: 'https://i.ytimg.com/vi/LD1FoB5gudI/mqdefault.jpg'
     },
     {
         id: 7,
-        title: 'دعاء القنوت',
-        description: 'تعليم دعاء القنوت في صلاة الوتر',
-        category: 'dua',
-        youtubeId: 'SdbfHEaXRi0',
-        thumbnail: 'https://i.ytimg.com/vi/SdbfHEaXRi0/mqdefault.jpg'
+        title: 'كيفية الصلاة الصحيحة',
+        description: 'تعليم الصلاة من التكبير إلى التسليم بطريقة مبسطة',
+        category: 'fiqh',
+        youtubeId: 'WKblU6mO8aQ',
+        thumbnail: 'https://i.ytimg.com/vi/WKblU6mO8aQ/mqdefault.jpg'
     },
     {
         id: 8,
-        title: 'أحكام الصلاة',
-        description: 'شرح مبسط لأحكام الصلاة',
+        title: 'تعليم الوضوء الصحيح',
+        description: 'الطريقة الصحيحة للوضوء خطوة بخطوة',
         category: 'fiqh',
-        youtubeId: 'I206g5q0D5s',
-        thumbnail: 'https://i.ytimg.com/vi/I206g5q0D5s/mqdefault.jpg'
+        youtubeId: 'dpBdnACI0Ug',
+        thumbnail: 'https://i.ytimg.com/vi/dpBdnACI0Ug/mqdefault.jpg'
     },
     {
         id: 9,
-        title: 'غزوة بدر الكبرى',
-        description: 'قصة غزوة بدر الكبرى وأحداثها',
+        title: 'السيرة النبوية - قصة المولد',
+        description: 'قصة مولد النبي محمد صلى الله عليه وسلم',
         category: 'seerah',
-        youtubeId: 'bx5UqfPbp9A',
-        thumbnail: 'https://i.ytimg.com/vi/bx5UqfPbp9A/mqdefault.jpg'
+        youtubeId: 'z9bW-b6f0KA',
+        thumbnail: 'https://i.ytimg.com/vi/z9bW-b6f0KA/mqdefault.jpg'
+    },
+    {
+        id: 10,
+        title: 'قصة الإسراء والمعراج',
+        description: 'رحلة الإسراء والمعراج المباركة',
+        category: 'seerah',
+        youtubeId: 'o-tV-MlKLzI',
+        thumbnail: 'https://i.ytimg.com/vi/o-tV-MlKLzI/mqdefault.jpg'
+    },
+    {
+        id: 11,
+        title: 'الأربعون النووية - الحديث الأول',
+        description: 'شرح الحديث الأول من الأربعين النووية',
+        category: 'hadith',
+        youtubeId: 'TKLCbLVmVco',
+        thumbnail: 'https://i.ytimg.com/vi/TKLCbLVmVco/mqdefault.jpg'
+    },
+    {
+        id: 12,
+        title: 'أحاديث نبوية عن الرحمة',
+        description: 'أحاديث شريفة عن رحمة النبي صلى الله عليه وسلم',
+        category: 'hadith',
+        youtubeId: 'sLfINCwq8JY',
+        thumbnail: 'https://i.ytimg.com/vi/sLfINCwq8JY/mqdefault.jpg'
+    },
+    {
+        id: 13,
+        title: 'سورة الملك كاملة - صلاح البدير',
+        description: 'تلاوة مباركة لسورة الملك المنجية من عذاب القبر',
+        category: 'quran',
+        youtubeId: 'AkIJjbTi8-Q',
+        thumbnail: 'https://i.ytimg.com/vi/AkIJjbTi8-Q/mqdefault.jpg'
+    },
+    {
+        id: 14,
+        title: 'آية الكرسي - تلاوة خاشعة',
+        description: 'آية الكرسي مكررة بصوت جميل للحفظ والاستماع',
+        category: 'quran',
+        youtubeId: 'ZDiOmta1s3E',
+        thumbnail: 'https://i.ytimg.com/vi/ZDiOmta1s3E/mqdefault.jpg'
+    },
+    {
+        id: 15,
+        title: 'دعاء ختم القرآن الكريم',
+        description: 'دعاء ختم القرآن الكريم كاملاً',
+        category: 'dua',
+        youtubeId: 'xU8SQRzMyyQ',
+        thumbnail: 'https://i.ytimg.com/vi/xU8SQRzMyyQ/mqdefault.jpg'
     }
 ];
 
