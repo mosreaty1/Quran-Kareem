@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مواقيت الصلاة - Prayer Times</title>
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.aladhan.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="microphone=(), camera=()">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <h1 class="main-title">مواقيت الصلاة</h1>
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">القرآن الكريم</a>
+                <a href="prayer-times.html" class="nav-link active">مواقيت الصلاة</a>
+                <a href="asma-ul-husna.html" class="nav-link">أسماء الله الحسنى</a>
+                <a href="tasbih.html" class="nav-link">المسبحة</a>
+                <a href="hijri-calendar.html" class="nav-link">التقويم الهجري</a>
+            </nav>
+        </header>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>جاري تحديد الموقع...</p>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="main-content" style="display: none;">
+            <!-- Date and Location Info -->
+            <div class="prayer-header">
+                <div class="date-info">
+                    <h2 id="current-date" class="current-date"></h2>
+                    <p id="hijri-date" class="hijri-date"></p>
+                </div>
+                <div class="location-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span id="location-name" class="location-name">تحديد الموقع...</span>
+                </div>
+            </div>
+
+            <!-- Prayer Times Grid -->
+            <div class="prayer-times-grid">
+                <div class="prayer-card">
+                    <div class="prayer-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19h12v2H6v-2zm5-11h2V3h-2v5zm7.14 2.41l-1.41 1.41-2.83-2.83 1.41-1.41 2.83 2.83zm-13.68 0l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM5 10h4v2H5v-2zm10 0h4v2h-4v-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="prayer-name">الفجر</h3>
+                    <p id="fajr-time" class="prayer-time">--:--</p>
+                </div>
+
+                <div class="prayer-card">
+                    <div class="prayer-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="8" r="3"/>
+                            <path d="M12 2v3m0 14v3m10-10h-3M5 12H2m15.36-7.36l-2.12 2.12M8.76 15.24l-2.12 2.12m12.72 0l-2.12-2.12M8.76 8.76L6.64 6.64"/>
+                        </svg>
+                    </div>
+                    <h3 class="prayer-name">الشروق</h3>
+                    <p id="sunrise-time" class="prayer-time">--:--</p>
+                </div>
+
+                <div class="prayer-card">
+                    <div class="prayer-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="10" r="4"/>
+                            <path d="M12 2v4m0 8v8m8-10h-4M8 12H2"/>
+                        </svg>
+                    </div>
+                    <h3 class="prayer-name">الظهر</h3>
+                    <p id="dhuhr-time" class="prayer-time">--:--</p>
+                </div>
+
+                <div class="prayer-card">
+                    <div class="prayer-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 5v2m0 10v2m7-7h-2M7 12H5m12.36-4.36l-1.41 1.41M8.05 15.95l-1.41 1.41m11.72 0l-1.41-1.41M8.05 8.05L6.64 6.64"/>
+                        </svg>
+                    </div>
+                    <h3 class="prayer-name">العصر</h3>
+                    <p id="asr-time" class="prayer-time">--:--</p>
+                </div>
+
+                <div class="prayer-card">
+                    <div class="prayer-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19h12v2H6v-2zm5-13h2v5h-2V6zM4.54 9.88l1.41-1.41 2.83 2.83-1.41 1.41-2.83-2.83zm13.51 0l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <h3 class="prayer-name">المغرب</h3>
+                    <p id="maghrib-time" class="prayer-time">--:--</p>
+                </div>
+
+                <div class="prayer-card">
+                    <div class="prayer-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </div>
+                    <h3 class="prayer-name">العشاء</h3>
+                    <p id="isha-time" class="prayer-time">--:--</p>
+                </div>
+            </div>
+
+            <!-- Next Prayer Info -->
+            <div class="next-prayer-info">
+                <h3 class="next-prayer-title">الصلاة القادمة</h3>
+                <div class="next-prayer-content">
+                    <p id="next-prayer-name" class="next-prayer-name">--</p>
+                    <p id="time-remaining" class="time-remaining">--</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 القرآن الكريم - جميع الحقوق محفوظة</p>
+            <p class="api-credit">مدعوم بواسطة <a href="https://aladhan.com/prayer-times-api" target="_blank">Aladhan API</a></p>
+
+            <div class="developer-info">
+                <p class="developer-title">Developed by Mohamed Alsariti</p>
+                <div class="social-links">
+                    <a href="https://wa.me/201558282586" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
+                    <a href="https://www.facebook.com/mohamed.el.seraty.2025" target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+                    <a href="https://sariti.tech" target="_blank" rel="noopener noreferrer" class="social-link">Sariti.tech</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="prayer-times.js"></script>
+</body>
+</html>
