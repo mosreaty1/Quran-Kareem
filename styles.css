@@ -539,6 +539,71 @@ body::before {
     filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
 }
 
+/* Visitor Counter */
+.visitor-counter {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.visitor-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 100px;
+}
+
+.stat-icon {
+    color: var(--accent-color);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.stat-value {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent-light);
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.stat-item.online .stat-value {
+    color: var(--accent-color);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
 /* Footer */
 .footer {
     background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
@@ -1009,6 +1074,22 @@ body::before {
 
     .social-link {
         font-size: 0.825rem;
+    }
+
+    .visitor-stats {
+        gap: 20px;
+    }
+
+    .stat-item {
+        min-width: 80px;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
     }
 
     .prayer-times-grid {
