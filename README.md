@@ -127,10 +127,138 @@ This project uses multiple free APIs:
 ```
 Quran-Kareem/
 │
-├── index.html          # Main HTML file
-├── styles.css          # CSS styling
-├── script.js           # JavaScript functionality
-└── README.md           # Documentation
+├── server.js              # Backend server (Node.js + Express)
+├── package.json           # npm dependencies
+├── .gitignore            # Git ignore file
+├── quran_videos.db       # SQLite database (auto-created)
+├── uploads/              # Uploaded video files directory
+├── index.html            # Main Quran player page
+├── admin.html            # Admin dashboard
+├── islamic-videos.html   # Islamic videos library
+├── prayer-times.html     # Prayer times page
+├── asma-ul-husna.html    # 99 Names of Allah
+├── tasbih.html          # Digital Tasbih counter
+├── hijri-calendar.html   # Hijri calendar page
+├── styles.css           # Main CSS file
+├── admin.js             # Admin dashboard logic
+├── islamic-videos.js    # Videos page logic
+├── visitor-counter.js   # Visitor tracking
+└── README.md            # Documentation
+```
+
+## 🎥 Backend & Video Management
+
+This project includes a **Node.js backend** with **SQLite database** for managing Islamic videos and visitor tracking.
+
+### Backend Setup
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Start the server:**
+   ```bash
+   npm start
+   ```
+
+   Or for development with auto-restart:
+   ```bash
+   npm run dev
+   ```
+
+3. **Server will run on:** `http://localhost:3000`
+
+### Admin Dashboard
+
+Access the admin panel at: `http://localhost:3000/admin.html`
+
+**Default Password:** `Quran@Admin2025`
+
+### Adding Videos
+
+The admin dashboard supports three types of videos:
+
+#### 1. YouTube Videos
+- Select "YouTube Video"
+- Enter the video ID (the part after `watch?v=`)
+- Example: For `https://www.youtube.com/watch?v=ABC123`, enter `ABC123`
+
+#### 2. External Video URLs
+- Select "External Video URL"
+- Paste direct video URL (MP4, WebM, etc.)
+- Example: `https://example.com/video.mp4`
+
+#### 3. Upload Video Files
+- Select "Upload Video File"
+- Choose video file from your computer
+- Supported formats: MP4, WebM, MOV, AVI, MKV
+- Maximum file size: 500MB
+
+### API Endpoints
+
+#### Videos
+- `GET /api/videos` - Get all videos
+- `GET /api/videos/:id` - Get single video
+- `POST /api/videos` - Add new video (multipart/form-data)
+- `PUT /api/videos/:id` - Update video
+- `DELETE /api/videos/:id` - Delete video
+
+#### Admin
+- `POST /api/admin/login` - Admin authentication
+
+### Database Schema
+
+**videos table:**
+```sql
+- id (INTEGER PRIMARY KEY)
+- title (TEXT) - Video title
+- description (TEXT) - Video description
+- category (TEXT) - quran/hadith/fiqh/seerah/dua
+- type (TEXT) - youtube/url/upload
+- youtube_id (TEXT) - YouTube video ID
+- video_url (TEXT) - Direct video URL
+- video_file (TEXT) - Uploaded file path
+- thumbnail (TEXT) - Thumbnail URL
+- created_at (DATETIME) - Creation timestamp
+```
+
+### Technologies
+
+**Backend:**
+- Express.js - Web framework
+- better-sqlite3 - SQLite database
+- Multer - File upload handling
+- CORS - Cross-origin resource sharing
+
+**Frontend:**
+- Fetch API - HTTP requests
+- FormData - File uploads
+- localStorage/sessionStorage - Client-side storage
+
+### Security
+
+- Password authentication for admin panel
+- File type validation (videos and images only)
+- File size limits (500MB max)
+- XSS prevention through text sanitization
+- CORS enabled for local development
+
+### Changing Admin Password
+
+Edit `server.js`:
+```javascript
+const ADMIN_PASSWORD = 'YourNewPassword';
+```
+
+Or use environment variables (create `.env` file):
+```
+ADMIN_PASSWORD=YourNewPassword
+```
+
+Then update `server.js`:
+```javascript
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Quran@Admin2025';
 ```
 
 ## 🎯 Features in Detail
