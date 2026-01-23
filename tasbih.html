@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المسبحة الإلكترونية - Digital Tasbih</title>
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <h1 class="main-title">المسبحة الإلكترونية</h1>
+            <p class="subtitle">عداد الذكر والتسبيح</p>
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">القرآن الكريم</a>
+                <a href="prayer-times.html" class="nav-link">مواقيت الصلاة</a>
+                <a href="asma-ul-husna.html" class="nav-link">أسماء الله الحسنى</a>
+                <a href="tasbih.html" class="nav-link active">المسبحة</a>
+                <a href="hijri-calendar.html" class="nav-link">التقويم الهجري</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Current Dhikr Display -->
+            <div class="dhikr-display">
+                <h2 id="current-dhikr" class="current-dhikr">سُبْحَانَ اللهِ</h2>
+                <p class="dhikr-transliteration">Subhan Allah</p>
+            </div>
+
+            <!-- Counter Display -->
+            <div class="counter-display">
+                <div class="counter-circle">
+                    <span id="counter" class="counter-number">0</span>
+                    <div class="counter-label">التسبيحات</div>
+                </div>
+            </div>
+
+            <!-- Count Button -->
+            <div class="counter-controls">
+                <button id="count-btn" class="count-btn">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span>اضغط للعد</span>
+                </button>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="action-buttons">
+                <button id="reset-btn" class="action-btn reset-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                    </svg>
+                    إعادة تعيين
+                </button>
+                <button id="target-btn" class="action-btn target-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    الهدف: <span id="target-display">33</span>
+                </button>
+            </div>
+
+            <!-- Dhikr Presets -->
+            <div class="dhikr-presets">
+                <h3 class="presets-title">الأذكار المحفوظة</h3>
+                <div class="presets-grid">
+                    <button class="preset-btn active" data-dhikr="سُبْحَانَ اللهِ" data-trans="Subhan Allah">
+                        سُبْحَانَ اللهِ
+                    </button>
+                    <button class="preset-btn" data-dhikr="الْحَمْدُ لِلَّهِ" data-trans="Alhamdulillah">
+                        الْحَمْدُ لِلَّهِ
+                    </button>
+                    <button class="preset-btn" data-dhikr="اللهُ أَكْبَرُ" data-trans="Allahu Akbar">
+                        اللهُ أَكْبَرُ
+                    </button>
+                    <button class="preset-btn" data-dhikr="لَا إِلَٰهَ إِلَّا اللهُ" data-trans="La ilaha illallah">
+                        لَا إِلَٰهَ إِلَّا اللهُ
+                    </button>
+                    <button class="preset-btn" data-dhikr="أَسْتَغْفِرُ اللهَ" data-trans="Astaghfirullah">
+                        أَسْتَغْفِرُ اللهَ
+                    </button>
+                    <button class="preset-btn" data-dhikr="سُبْحَانَ اللهِ وَبِحَمْدِهِ" data-trans="Subhan Allahi wa bihamdihi">
+                        سُبْحَانَ اللهِ وَبِحَمْدِهِ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-label">التقدم</span>
+                    <span id="progress-percentage" class="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 القرآن الكريم - جميع الحقوق محفوظة</p>
+            <p class="api-credit">المسبحة الإلكترونية للذكر والتسبيح</p>
+
+            <div class="developer-info">
+                <p class="developer-title">Developed by Mohamed Alsariti</p>
+                <div class="social-links">
+                    <a href="https://wa.me/201558282586" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
+                    <a href="https://www.facebook.com/mohamed.el.seraty.2025" target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+                    <a href="https://sariti.tech" target="_blank" rel="noopener noreferrer" class="social-link">Sariti.tech</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="tasbih.js"></script>
+</body>
+</html>
