@@ -138,6 +138,34 @@ const shareBtns = document.querySelectorAll('.share-btn');
 
 let currentVideo = null;
 let currentCategory = 'all';
+let allVideos = [];
+
+// Get custom videos from localStorage
+function getCustomVideos() {
+    const videos = localStorage.getItem('custom_videos');
+    return videos ? JSON.parse(videos) : [];
+}
+
+// Merge custom videos with YouTube videos
+function getAllVideos() {
+    const customVideos = getCustomVideos();
+
+    // Convert custom videos to the same format
+    const formattedCustomVideos = customVideos.map(video => ({
+        id: video.id,
+        title: video.title,
+        description: video.description,
+        category: video.category,
+        youtubeId: video.type === 'youtube' ? video.youtubeId : null,
+        videoUrl: video.type === 'url' ? video.videoUrl : null,
+        thumbnail: video.thumbnail,
+        isCustom: true,
+        type: video.type
+    }));
+
+    // Combine custom videos (shown first) with YouTube videos
+    return [...formattedCustomVideos, ...videos];
+}
 
 // Security: Sanitize text content
 function sanitizeText(text) {
@@ -150,9 +178,12 @@ function sanitizeText(text) {
 function renderVideos(category = 'all') {
     videosGrid.innerHTML = '';
 
+    // Get all videos (custom + YouTube)
+    allVideos = getAllVideos();
+
     const filteredVideos = category === 'all'
-        ? videos
-        : videos.filter(video => video.category === category);
+        ? allVideos
+        : allVideos.filter(video => video.category === category);
 
     if (filteredVideos.length === 0) {
         videosGrid.innerHTML = '<p class="no-videos">لا توجد فيديوهات في هذا القسم حالياً</p>';
@@ -212,23 +243,35 @@ function renderVideos(category = 'all') {
 
 // Open video modal
 function openVideoModal(videoId) {
-    currentVideo = videos.find(v => v.id === videoId);
+    currentVideo = allVideos.find(v => v.id === videoId);
     if (!currentVideo) return;
 
     // Set video info
     videoTitle.textContent = currentVideo.title;
     videoDescription.textContent = currentVideo.description;
 
-    // Create YouTube iframe (privacy-enhanced mode)
-    videoPlayer.innerHTML = `
-        <iframe
-            src="https://www.youtube-nocookie.com/embed/${currentVideo.youtubeId}?rel=0&modestbranding=1"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            loading="lazy"
-        ></iframe>
-    `;
+    // Create video player based on type
+    if (currentVideo.type === 'url' || currentVideo.videoUrl) {
+        // Direct video URL - use HTML5 video player
+        videoPlayer.innerHTML = `
+            <video controls style="width: 100%; height: 100%; background: #000;" preload="metadata">
+                <source src="${currentVideo.videoUrl}" type="video/mp4">
+                <source src="${currentVideo.videoUrl}" type="video/webm">
+                المتصفح لا يدعم تشغيل الفيديو
+            </video>
+        `;
+    } else {
+        // YouTube video - use iframe (privacy-enhanced mode)
+        videoPlayer.innerHTML = `
+            <iframe
+                src="https://www.youtube-nocookie.com/embed/${currentVideo.youtubeId}?rel=0&modestbranding=1"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+            ></iframe>
+        `;
+    }
 
     // Show modal
     videoModal.style.display = 'flex';
