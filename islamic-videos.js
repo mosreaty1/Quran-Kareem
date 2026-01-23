@@ -8,120 +8,120 @@ const videos = [
         title: 'سورة البقرة كاملة - مشاري العفاسي',
         description: 'تلاوة خاشعة لسورة البقرة كاملة بصوت الشيخ مشاري راشد العفاسي',
         category: 'quran',
-        youtubeId: 'Z48lebSTboE',
-        thumbnail: 'https://i.ytimg.com/vi/Z48lebSTboE/mqdefault.jpg'
+        youtubeId: '5-UJPdAebF8',
+        thumbnail: 'https://i.ytimg.com/vi/5-UJPdAebF8/mqdefault.jpg'
     },
     {
         id: 2,
         title: 'سورة الكهف كاملة - عبد الرحمن السديس',
         description: 'تلاوة مؤثرة لسورة الكهف من الحرم المكي',
         category: 'quran',
-        youtubeId: 'IZiJLw7eT4Y',
-        thumbnail: 'https://i.ytimg.com/vi/IZiJLw7eT4Y/mqdefault.jpg'
+        youtubeId: 'dGu0iT-kjEE',
+        thumbnail: 'https://i.ytimg.com/vi/dGu0iT-kjEE/mqdefault.jpg'
     },
     {
         id: 3,
         title: 'سورة الرحمن - ماهر المعيقلي',
         description: 'تلاوة جميلة لسورة الرحمن بصوت الشيخ ماهر المعيقلي',
         category: 'quran',
-        youtubeId: 'MbPiNcv95r8',
-        thumbnail: 'https://i.ytimg.com/vi/MbPiNcv95r8/mqdefault.jpg'
+        youtubeId: 'qLu1VGIvUZs',
+        thumbnail: 'https://i.ytimg.com/vi/qLu1VGIvUZs/mqdefault.jpg'
     },
     {
         id: 4,
         title: 'سورة يس كاملة - عبد الباسط',
         description: 'تلاوة مؤثرة لسورة يس بصوت الشيخ عبد الباسط عبد الصمد',
         category: 'quran',
-        youtubeId: 'jIJ0d5grv9I',
-        thumbnail: 'https://i.ytimg.com/vi/jIJ0d5grv9I/mqdefault.jpg'
+        youtubeId: 'qm9_K3Cfdtw',
+        thumbnail: 'https://i.ytimg.com/vi/qm9_K3Cfdtw/mqdefault.jpg'
     },
     {
         id: 5,
-        title: 'أذكار الصباح والمساء كاملة',
-        description: 'أذكار الصباح والمساء مع الدعاء والتسبيح',
-        category: 'dua',
-        youtubeId: 'yv-L8d5GHWI',
-        thumbnail: 'https://i.ytimg.com/vi/yv-L8d5GHWI/mqdefault.jpg'
+        title: 'سورة الملك كاملة - مشاري العفاسي',
+        description: 'تلاوة مباركة لسورة الملك المنجية من عذاب القبر',
+        category: 'quran',
+        youtubeId: 'cHHSNHLbJ0Q',
+        thumbnail: 'https://i.ytimg.com/vi/cHHSNHLbJ0Q/mqdefault.jpg'
     },
     {
         id: 6,
-        title: 'رقية شرعية كاملة',
-        description: 'الرقية الشرعية الشاملة من القرآن والسنة',
-        category: 'dua',
-        youtubeId: 'LD1FoB5gudI',
-        thumbnail: 'https://i.ytimg.com/vi/LD1FoB5gudI/mqdefault.jpg'
+        title: 'آية الكرسي مكررة - للحفظ',
+        description: 'آية الكرسي مكررة بصوت جميل للحفظ والاستماع',
+        category: 'quran',
+        youtubeId: 'DBuUTNDE4I4',
+        thumbnail: 'https://i.ytimg.com/vi/DBuUTNDE4I4/mqdefault.jpg'
     },
     {
         id: 7,
-        title: 'كيفية الصلاة الصحيحة',
-        description: 'تعليم الصلاة من التكبير إلى التسليم بطريقة مبسطة',
-        category: 'fiqh',
-        youtubeId: 'WKblU6mO8aQ',
-        thumbnail: 'https://i.ytimg.com/vi/WKblU6mO8aQ/mqdefault.jpg'
+        title: 'أذكار الصباح والمساء',
+        description: 'أذكار الصباح والمساء مع الدعاء والتسبيح',
+        category: 'dua',
+        youtubeId: 'mBxSE73-7ZY',
+        thumbnail: 'https://i.ytimg.com/vi/mBxSE73-7ZY/mqdefault.jpg'
     },
     {
         id: 8,
-        title: 'تعليم الوضوء الصحيح',
-        description: 'الطريقة الصحيحة للوضوء خطوة بخطوة',
-        category: 'fiqh',
-        youtubeId: 'dpBdnACI0Ug',
-        thumbnail: 'https://i.ytimg.com/vi/dpBdnACI0Ug/mqdefault.jpg'
+        title: 'رقية شرعية شاملة',
+        description: 'الرقية الشرعية الشاملة من القرآن والسنة',
+        category: 'dua',
+        youtubeId: 'bW62wHpVGW4',
+        thumbnail: 'https://i.ytimg.com/vi/bW62wHpVGW4/mqdefault.jpg'
     },
     {
         id: 9,
-        title: 'السيرة النبوية - قصة المولد',
-        description: 'قصة مولد النبي محمد صلى الله عليه وسلم',
-        category: 'seerah',
-        youtubeId: 'z9bW-b6f0KA',
-        thumbnail: 'https://i.ytimg.com/vi/z9bW-b6f0KA/mqdefault.jpg'
+        title: 'دعاء ختم القرآن',
+        description: 'دعاء ختم القرآن الكريم كاملاً',
+        category: 'dua',
+        youtubeId: 'HBf0lpZwztQ',
+        thumbnail: 'https://i.ytimg.com/vi/HBf0lpZwztQ/mqdefault.jpg'
     },
     {
         id: 10,
-        title: 'قصة الإسراء والمعراج',
-        description: 'رحلة الإسراء والمعراج المباركة',
-        category: 'seerah',
-        youtubeId: 'o-tV-MlKLzI',
-        thumbnail: 'https://i.ytimg.com/vi/o-tV-MlKLzI/mqdefault.jpg'
+        title: 'كيفية الصلاة الصحيحة',
+        description: 'تعليم الصلاة من التكبير إلى التسليم بطريقة مبسطة',
+        category: 'fiqh',
+        youtubeId: 'T4auGhmeBlw',
+        thumbnail: 'https://i.ytimg.com/vi/T4auGhmeBlw/mqdefault.jpg'
     },
     {
         id: 11,
-        title: 'الأربعون النووية - الحديث الأول',
-        description: 'شرح الحديث الأول من الأربعين النووية',
-        category: 'hadith',
-        youtubeId: 'TKLCbLVmVco',
-        thumbnail: 'https://i.ytimg.com/vi/TKLCbLVmVco/mqdefault.jpg'
+        title: 'تعليم الوضوء الصحيح',
+        description: 'الطريقة الصحيحة للوضوء خطوة بخطوة',
+        category: 'fiqh',
+        youtubeId: 'tT_nvWreehg',
+        thumbnail: 'https://i.ytimg.com/vi/tT_nvWreehg/mqdefault.jpg'
     },
     {
         id: 12,
-        title: 'أحاديث نبوية عن الرحمة',
-        description: 'أحاديث شريفة عن رحمة النبي صلى الله عليه وسلم',
-        category: 'hadith',
-        youtubeId: 'sLfINCwq8JY',
-        thumbnail: 'https://i.ytimg.com/vi/sLfINCwq8JY/mqdefault.jpg'
+        title: 'أحكام الصلاة المبسطة',
+        description: 'شرح مبسط لأحكام الصلاة',
+        category: 'fiqh',
+        youtubeId: 'KZ8Ix7cH5l0',
+        thumbnail: 'https://i.ytimg.com/vi/KZ8Ix7cH5l0/mqdefault.jpg'
     },
     {
         id: 13,
-        title: 'سورة الملك كاملة - صلاح البدير',
-        description: 'تلاوة مباركة لسورة الملك المنجية من عذاب القبر',
-        category: 'quran',
-        youtubeId: 'AkIJjbTi8-Q',
-        thumbnail: 'https://i.ytimg.com/vi/AkIJjbTi8-Q/mqdefault.jpg'
+        title: 'السيرة النبوية - المولد الشريف',
+        description: 'قصة مولد النبي محمد صلى الله عليه وسلم',
+        category: 'seerah',
+        youtubeId: 'DvCvKM8vC_E',
+        thumbnail: 'https://i.ytimg.com/vi/DvCvKM8vC_E/mqdefault.jpg'
     },
     {
         id: 14,
-        title: 'آية الكرسي - تلاوة خاشعة',
-        description: 'آية الكرسي مكررة بصوت جميل للحفظ والاستماع',
-        category: 'quran',
-        youtubeId: 'ZDiOmta1s3E',
-        thumbnail: 'https://i.ytimg.com/vi/ZDiOmta1s3E/mqdefault.jpg'
+        title: 'الإسراء والمعراج',
+        description: 'رحلة الإسراء والمعراج المباركة',
+        category: 'seerah',
+        youtubeId: '8g9gFXR-qVY',
+        thumbnail: 'https://i.ytimg.com/vi/8g9gFXR-qVY/mqdefault.jpg'
     },
     {
         id: 15,
-        title: 'دعاء ختم القرآن الكريم',
-        description: 'دعاء ختم القرآن الكريم كاملاً',
-        category: 'dua',
-        youtubeId: 'xU8SQRzMyyQ',
-        thumbnail: 'https://i.ytimg.com/vi/xU8SQRzMyyQ/mqdefault.jpg'
+        title: 'الأربعون النووية',
+        description: 'شرح الأحاديث الأربعين النووية',
+        category: 'hadith',
+        youtubeId: 'jBzZ1PqXe14',
+        thumbnail: 'https://i.ytimg.com/vi/jBzZ1PqXe14/mqdefault.jpg'
     }
 ];
 
