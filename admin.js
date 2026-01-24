@@ -82,19 +82,44 @@ function sanitizeText(text) {
     return div.innerHTML;
 }
 
+// Extract YouTube video ID from various URL formats
+function extractYouTubeId(input) {
+    // If it's already just an ID (11 characters, alphanumeric with dash/underscore)
+    if (/^[a-zA-Z0-9_-]{11}$/.test(input.trim())) {
+        return input.trim();
+    }
+
+    // Handle various YouTube URL formats
+    const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,  // Standard and short URLs
+        /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/,                      // Live streams
+        /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,                     // Embed URLs
+        /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/                          // Old format
+    ];
+
+    for (const pattern of patterns) {
+        const match = input.match(pattern);
+        if (match && match[1]) {
+            return match[1];
+        }
+    }
+
+    // If no pattern matched, return the original input
+    return input.trim();
+}
+
 // Add new video
 function addVideo() {
-    console.log('addVideo function called');
-
     const title = document.getElementById('video-title').value.trim();
     const description = document.getElementById('video-description').value.trim();
     const category = document.getElementById('video-category').value;
     const videoType = document.getElementById('video-type').value;
-    const youtubeId = document.getElementById('youtube-id').value.trim();
+    const youtubeInput = document.getElementById('youtube-id').value.trim();
     const videoUrl = document.getElementById('video-url').value.trim();
     const thumbnailUrl = document.getElementById('thumbnail-url').value.trim();
 
-    console.log('Form values:', { title, description, category, videoType, youtubeId, videoUrl });
+    // Extract YouTube ID if it's a URL
+    const youtubeId = videoType === 'youtube' ? extractYouTubeId(youtubeInput) : null;
 
     // Validation
     if (!title) {
@@ -108,7 +133,12 @@ function addVideo() {
     }
 
     if (videoType === 'youtube' && !youtubeId) {
-        showAlert('الرجاء إدخال معرف فيديو YouTube', 'error');
+        showAlert('الرجاء إدخال رابط أو معرف فيديو YouTube صحيح', 'error');
+        return;
+    }
+
+    if (videoType === 'youtube' && youtubeId.length !== 11) {
+        showAlert('معرف الفيديو غير صحيح. الرجاء التأكد من الرابط', 'error');
         return;
     }
 
@@ -254,8 +284,6 @@ function formatDate(dateString) {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded');
-
     // Check if already logged in
     const isLoggedIn = sessionStorage.getItem('admin_logged_in');
     if (isLoggedIn === 'true') {
@@ -264,34 +292,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Login button
     const loginBtn = document.getElementById('login-btn');
-    console.log('Login button:', loginBtn);
     if (loginBtn) {
         loginBtn.addEventListener('click', login);
     }
 
     // Logout button
     const logoutBtn = document.getElementById('logout-btn');
-    console.log('Logout button:', logoutBtn);
     if (logoutBtn) {
         logoutBtn.addEventListener('click', logout);
     }
 
     // Add video button
     const addVideoBtn = document.getElementById('add-video-btn');
-    console.log('Add video button found:', addVideoBtn);
     if (addVideoBtn) {
-        addVideoBtn.addEventListener('click', function() {
-            console.log('Add video button clicked!');
-            addVideo();
-        });
-        console.log('Event listener attached to add video button');
-    } else {
-        console.error('Add video button NOT found!');
+        addVideoBtn.addEventListener('click', addVideo);
     }
 
     // Video type select
     const videoTypeSelect = document.getElementById('video-type');
-    console.log('Video type select:', videoTypeSelect);
     if (videoTypeSelect) {
         videoTypeSelect.addEventListener('change', toggleVideoInput);
     }
