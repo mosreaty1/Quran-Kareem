@@ -1,22 +1,7 @@
-# Dependencies
+# Dependencies (not needed for GitHub Pages)
 node_modules/
 package-lock.json
-
-# Database
-*.db
-*.db-shm
-*.db-wal
-
-# Uploads
-uploads/
-
-# Logs
-*.log
-npm-debug.log*
-
-# Environment
-.env
-.env.local
+.package-lock.json
 
 # OS
 .DS_Store

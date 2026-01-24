@@ -44,23 +44,37 @@ Simply open `index.html` in any modern web browser to use the website.
 2. **Open in browser:**
    - Simply open `index.html` in your web browser
    - No build process or dependencies required!
+   - Access all pages:
+     - Main page: `index.html`
+     - Videos: `islamic-videos.html`
+     - Admin: `admin.html`
+     - Prayer times: `prayer-times.html`
+     - And more...
 
-### Deploy to GitHub Pages
+### Deploy to GitHub Pages (RECOMMENDED)
+
+This is a **100% static website** perfect for GitHub Pages!
 
 1. **Push to GitHub:**
    ```bash
    git add .
-   git commit -m "Initial commit: Complete Quran website"
+   git commit -m "Deploy Quran Kareem website"
    git push origin main
    ```
 
 2. **Enable GitHub Pages:**
    - Go to your repository on GitHub
-   - Click on "Settings"
-   - Scroll down to "Pages" section
-   - Under "Source", select "main" branch
-   - Click "Save"
+   - Click **"Settings"**
+   - Scroll to **"Pages"** section (left sidebar)
+   - Under **"Source"**, select **"main"** branch
+   - Click **"Save"**
+   - Wait 1-2 minutes
    - Your site will be live at: `https://yourusername.github.io/Quran-Kareem/`
+
+3. **Access your live site:**
+   - Main page: `https://yourusername.github.io/Quran-Kareem/`
+   - Admin panel: `https://yourusername.github.io/Quran-Kareem/admin.html`
+   - Videos: `https://yourusername.github.io/Quran-Kareem/islamic-videos.html`
 
 ### Deploy to Netlify
 
@@ -71,6 +85,7 @@ Simply open `index.html` in any modern web browser to use the website.
    - Click "Add new site" → "Import an existing project"
    - Connect your GitHub account
    - Select your repository
+   - Build settings: Leave empty (no build needed)
    - Click "Deploy site"
    - Your site will be live with a custom URL!
 
@@ -82,6 +97,7 @@ Simply open `index.html` in any modern web browser to use the website.
    - Go to [vercel.com](https://vercel.com)
    - Click "New Project"
    - Import your GitHub repository
+   - Framework Preset: "Other" (no framework)
    - Click "Deploy"
    - Your site will be live instantly!
 
@@ -127,11 +143,6 @@ This project uses multiple free APIs:
 ```
 Quran-Kareem/
 │
-├── server.js              # Backend server (Node.js + Express)
-├── package.json           # npm dependencies
-├── .gitignore            # Git ignore file
-├── quran_videos.db       # SQLite database (auto-created)
-├── uploads/              # Uploaded video files directory
 ├── index.html            # Main Quran player page
 ├── admin.html            # Admin dashboard
 ├── islamic-videos.html   # Islamic videos library
@@ -143,122 +154,62 @@ Quran-Kareem/
 ├── admin.js             # Admin dashboard logic
 ├── islamic-videos.js    # Videos page logic
 ├── visitor-counter.js   # Visitor tracking
+├── .gitignore           # Git ignore file
 └── README.md            # Documentation
 ```
 
-## 🎥 Backend & Video Management
+## 🎥 Admin Dashboard & Video Management
 
-This project includes a **Node.js backend** with **SQLite database** for managing Islamic videos and visitor tracking.
+This project includes an **admin dashboard** for managing Islamic videos using browser **localStorage**.
 
-### Backend Setup
+### Access Admin Dashboard
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Start the server:**
-   ```bash
-   npm start
-   ```
-
-   Or for development with auto-restart:
-   ```bash
-   npm run dev
-   ```
-
-3. **Server will run on:** `http://localhost:3000`
-
-### Admin Dashboard
-
-Access the admin panel at: `http://localhost:3000/admin.html`
+Simply open `admin.html` in your browser or visit:
+`https://yourusername.github.io/Quran-Kareem/admin.html`
 
 **Default Password:** `Quran@Admin2025`
 
 ### Adding Videos
 
-The admin dashboard supports three types of videos:
+The admin dashboard supports two types of videos:
 
 #### 1. YouTube Videos
-- Select "YouTube Video"
+- Select "فيديو YouTube"
 - Enter the video ID (the part after `watch?v=`)
 - Example: For `https://www.youtube.com/watch?v=ABC123`, enter `ABC123`
 
 #### 2. External Video URLs
-- Select "External Video URL"
+- Select "رابط فيديو خارجي"
 - Paste direct video URL (MP4, WebM, etc.)
 - Example: `https://example.com/video.mp4`
 
-#### 3. Upload Video Files
-- Select "Upload Video File"
-- Choose video file from your computer
-- Supported formats: MP4, WebM, MOV, AVI, MKV
-- Maximum file size: 500MB
+### Data Storage
 
-### API Endpoints
-
-#### Videos
-- `GET /api/videos` - Get all videos
-- `GET /api/videos/:id` - Get single video
-- `POST /api/videos` - Add new video (multipart/form-data)
-- `PUT /api/videos/:id` - Update video
-- `DELETE /api/videos/:id` - Delete video
-
-#### Admin
-- `POST /api/admin/login` - Admin authentication
-
-### Database Schema
-
-**videos table:**
-```sql
-- id (INTEGER PRIMARY KEY)
-- title (TEXT) - Video title
-- description (TEXT) - Video description
-- category (TEXT) - quran/hadith/fiqh/seerah/dua
-- type (TEXT) - youtube/url/upload
-- youtube_id (TEXT) - YouTube video ID
-- video_url (TEXT) - Direct video URL
-- video_file (TEXT) - Uploaded file path
-- thumbnail (TEXT) - Thumbnail URL
-- created_at (DATETIME) - Creation timestamp
-```
+- **localStorage** - All custom videos are saved in browser storage
+- **sessionStorage** - Admin login status
+- Videos persist across browser sessions
+- Clearing browser data will remove custom videos
 
 ### Technologies
 
-**Backend:**
-- Express.js - Web framework
-- better-sqlite3 - SQLite database
-- Multer - File upload handling
-- CORS - Cross-origin resource sharing
-
 **Frontend:**
-- Fetch API - HTTP requests
-- FormData - File uploads
-- localStorage/sessionStorage - Client-side storage
+- HTML5 - Structure
+- CSS3 - Styling and animations
+- Vanilla JavaScript - Logic and interactivity
+- localStorage API - Data persistence
+- sessionStorage API - Session management
 
 ### Security
 
 - Password authentication for admin panel
-- File type validation (videos and images only)
-- File size limits (500MB max)
 - XSS prevention through text sanitization
-- CORS enabled for local development
+- Client-side validation
 
 ### Changing Admin Password
 
-Edit `server.js`:
+Edit `admin.js` line 4:
 ```javascript
 const ADMIN_PASSWORD = 'YourNewPassword';
-```
-
-Or use environment variables (create `.env` file):
-```
-ADMIN_PASSWORD=YourNewPassword
-```
-
-Then update `server.js`:
-```javascript
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Quran@Admin2025';
 ```
 
 ## 🎯 Features in Detail
