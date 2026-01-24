@@ -3,14 +3,6 @@
 
 const ADMIN_PASSWORD = 'Quran@Admin2025';
 
-// Check if already logged in
-document.addEventListener('DOMContentLoaded', () => {
-    const isLoggedIn = sessionStorage.getItem('admin_logged_in');
-    if (isLoggedIn === 'true') {
-        showDashboard();
-    }
-});
-
 // Login function
 function login() {
     const password = document.getElementById('admin-password').value;
@@ -215,9 +207,17 @@ function loadVideos() {
                     </span>
                 </div>
             </div>
-            <button onclick="deleteVideo(${video.id})" class="btn btn-danger">حذف</button>
+            <button class="btn btn-danger delete-video-btn" data-video-id="${video.id}">حذف</button>
         </div>
     `).join('');
+
+    // Add delete event listeners
+    videosListEl.querySelectorAll('.delete-video-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const videoId = parseInt(this.getAttribute('data-video-id'));
+            deleteVideo(videoId);
+        });
+    });
 }
 
 // Get category name in Arabic
@@ -248,9 +248,45 @@ function formatDate(dateString) {
     return date.toLocaleDateString('ar-EG', options);
 }
 
-// Allow Enter key to login
-document.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && document.getElementById('login-container').style.display !== 'none') {
-        login();
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if already logged in
+    const isLoggedIn = sessionStorage.getItem('admin_logged_in');
+    if (isLoggedIn === 'true') {
+        showDashboard();
+    }
+
+    // Login button
+    const loginBtn = document.getElementById('login-btn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', login);
+    }
+
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+
+    // Add video button
+    const addVideoBtn = document.getElementById('add-video-btn');
+    if (addVideoBtn) {
+        addVideoBtn.addEventListener('click', addVideo);
+    }
+
+    // Video type select
+    const videoTypeSelect = document.getElementById('video-type');
+    if (videoTypeSelect) {
+        videoTypeSelect.addEventListener('change', toggleVideoInput);
+    }
+
+    // Allow Enter key to login
+    const passwordInput = document.getElementById('admin-password');
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
     }
 });
