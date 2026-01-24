@@ -84,6 +84,8 @@ function sanitizeText(text) {
 
 // Add new video
 function addVideo() {
+    console.log('addVideo function called');
+
     const title = document.getElementById('video-title').value.trim();
     const description = document.getElementById('video-description').value.trim();
     const category = document.getElementById('video-category').value;
@@ -91,6 +93,8 @@ function addVideo() {
     const youtubeId = document.getElementById('youtube-id').value.trim();
     const videoUrl = document.getElementById('video-url').value.trim();
     const thumbnailUrl = document.getElementById('thumbnail-url').value.trim();
+
+    console.log('Form values:', { title, description, category, videoType, youtubeId, videoUrl });
 
     // Validation
     if (!title) {
@@ -270,8 +274,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add video button
     const addVideoBtn = document.getElementById('add-video-btn');
+    console.log('Add video button found:', addVideoBtn);
     if (addVideoBtn) {
         addVideoBtn.addEventListener('click', addVideo);
+        console.log('Event listener attached to add video button');
+    } else {
+        console.error('Add video button NOT found!');
     }
 
     // Video type select
