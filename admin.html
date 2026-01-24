@@ -153,7 +153,7 @@
             <label>كلمة المرور</label>
             <input type="password" id="admin-password" placeholder="أدخل كلمة المرور">
         </div>
-        <button onclick="login()" class="btn btn-primary" style="width: 100%;">تسجيل الدخول</button>
+        <button id="login-btn" class="btn btn-primary" style="width: 100%;">تسجيل الدخول</button>
         <p id="login-error" style="color: #dc2626; margin-top: 15px; display: none; text-align: center;">كلمة مرور خاطئة</p>
     </div>
 
@@ -161,7 +161,7 @@
     <div id="admin-container" class="admin-container">
         <div class="admin-header">
             <h1 style="font-family: 'Amiri', serif; margin: 0;">إدارة الفيديوهات الإسلامية</h1>
-            <button onclick="logout()" class="btn btn-logout">تسجيل الخروج</button>
+            <button id="logout-btn" class="btn btn-logout">تسجيل الخروج</button>
         </div>
 
         <div id="alert-container"></div>
@@ -193,7 +193,7 @@
 
             <div class="form-group">
                 <label>نوع الفيديو *</label>
-                <select id="video-type" onchange="toggleVideoInput()">
+                <select id="video-type">
                     <option value="youtube">فيديو YouTube</option>
                     <option value="url">رابط فيديو خارجي (MP4, etc.)</option>
                 </select>
@@ -217,7 +217,7 @@
                 <small style="color: var(--text-gray);">سيتم إنشاء صورة افتراضية إذا تركت فارغاً</small>
             </div>
 
-            <button onclick="addVideo()" class="btn btn-primary">إضافة الفيديو</button>
+            <button id="add-video-btn" class="btn btn-primary">إضافة الفيديو</button>
         </div>
 
         <!-- Videos List -->
