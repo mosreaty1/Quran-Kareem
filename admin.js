@@ -254,6 +254,8 @@ function formatDate(dateString) {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded');
+
     // Check if already logged in
     const isLoggedIn = sessionStorage.getItem('admin_logged_in');
     if (isLoggedIn === 'true') {
@@ -262,12 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Login button
     const loginBtn = document.getElementById('login-btn');
+    console.log('Login button:', loginBtn);
     if (loginBtn) {
         loginBtn.addEventListener('click', login);
     }
 
     // Logout button
     const logoutBtn = document.getElementById('logout-btn');
+    console.log('Logout button:', logoutBtn);
     if (logoutBtn) {
         logoutBtn.addEventListener('click', logout);
     }
@@ -276,7 +280,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const addVideoBtn = document.getElementById('add-video-btn');
     console.log('Add video button found:', addVideoBtn);
     if (addVideoBtn) {
-        addVideoBtn.addEventListener('click', addVideo);
+        addVideoBtn.addEventListener('click', function() {
+            console.log('Add video button clicked!');
+            addVideo();
+        });
         console.log('Event listener attached to add video button');
     } else {
         console.error('Add video button NOT found!');
@@ -284,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Video type select
     const videoTypeSelect = document.getElementById('video-type');
+    console.log('Video type select:', videoTypeSelect);
     if (videoTypeSelect) {
         videoTypeSelect.addEventListener('change', toggleVideoInput);
     }
