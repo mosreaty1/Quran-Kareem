@@ -140,38 +140,31 @@ let currentVideo = null;
 let currentCategory = 'all';
 let allVideos = [];
 
-// Get videos from backend API
-async function getVideosFromAPI() {
-    try {
-        const response = await fetch('http://localhost:3000/api/videos');
-        const data = await response.json();
-
-        if (data.success) {
-            return data.videos.map(video => ({
-                id: video.id,
-                title: video.title,
-                description: video.description,
-                category: video.category,
-                youtubeId: video.youtube_id,
-                videoUrl: video.video_url || video.video_file,
-                thumbnail: video.thumbnail,
-                isCustom: true,
-                type: video.type
-            }));
-        }
-        return [];
-    } catch (error) {
-        console.error('Error fetching videos from API:', error);
-        return [];
-    }
+// Get custom videos from localStorage
+function getCustomVideos() {
+    const storedVideos = localStorage.getItem('custom_videos');
+    return storedVideos ? JSON.parse(storedVideos) : [];
 }
 
-// Merge API videos with default YouTube videos
-async function getAllVideos() {
-    const apiVideos = await getVideosFromAPI();
+// Merge custom videos with default YouTube videos
+function getAllVideos() {
+    const customVideos = getCustomVideos();
 
-    // Combine API videos (shown first) with default YouTube videos
-    return [...apiVideos, ...videos];
+    // Convert custom videos to same format
+    const formattedCustomVideos = customVideos.map(video => ({
+        id: video.id,
+        title: video.title,
+        description: video.description,
+        category: video.category,
+        youtubeId: video.type === 'youtube' ? video.youtubeId : null,
+        videoUrl: video.type === 'url' ? video.videoUrl : null,
+        thumbnail: video.thumbnail,
+        isCustom: true,
+        type: video.type
+    }));
+
+    // Combine custom videos (shown first) with default YouTube videos
+    return [...formattedCustomVideos, ...videos];
 }
 
 // Security: Sanitize text content
@@ -182,17 +175,15 @@ function sanitizeText(text) {
 }
 
 // Render videos
-async function renderVideos(category = 'all') {
-    videosGrid.innerHTML = '<p class="no-videos">جاري التحميل...</p>';
+function renderVideos(category = 'all') {
+    videosGrid.innerHTML = '';
 
-    // Get all videos (API + YouTube)
-    allVideos = await getAllVideos();
+    // Get all videos (custom + YouTube)
+    allVideos = getAllVideos();
 
     const filteredVideos = category === 'all'
         ? allVideos
         : allVideos.filter(video => video.category === category);
-
-    videosGrid.innerHTML = '';
 
     if (filteredVideos.length === 0) {
         videosGrid.innerHTML = '<p class="no-videos">لا توجد فيديوهات في هذا القسم حالياً</p>';
